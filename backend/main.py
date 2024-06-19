@@ -7,7 +7,7 @@ from models import Contact
 def get_contacts():
     contacts=Contact.query.all()
     json_contacts=list(map(lambda x:x.to_json(),contacts))
-    return jsonify(json_contacts)
+    return jsonify({"contacts":json_contacts})
 
 @app.route("/create_contact",methods=["POST"])
 def create_contact():
@@ -23,13 +23,13 @@ def create_contact():
         db.session.add(new_contact)
         db.session.commit()
     except Exception as e:
-        return (jsonify({"message":str(e)}),500,)
+        return (jsonify({"message":str(e)}),400,)
     
     return (jsonify({"message":"Contact created"}),201,)
 
 @app.route("/update_contact/<int:user_id>",methods=["PUT"])
 def update_contact(user_id):
-    contact=Contact.query.filter_by(id=user_id)
+    contact=Contact.query.get(id=user_id)
 
     if not contact:
         return jsonify({"message":"Contact not found"}),404
