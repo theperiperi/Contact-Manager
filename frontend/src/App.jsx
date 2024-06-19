@@ -3,10 +3,10 @@ import './App.css'
 import ContactList from './ContactList'
 
 function App() {
-  const [contacts, setContacts]= useState([{firstName: "John", lastName: "Doe", email: "email",id:1}])
+  const [contacts, setContacts]= useState([])
 
   useEffect(() => {
-    fetchContacts()
+    //fetchContacts()
   }, [])
 
   const fetchContacts = async () => {
