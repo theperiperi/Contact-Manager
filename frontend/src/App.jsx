@@ -43,13 +43,13 @@ function App() {
   };
 
   return (
-    <>
+    <body>
       <ContactList
         contacts={contacts}
         updateContact={openEditModal}
         updateCallback={onUpdate}
       />
-      <button onClick={openCreateModal}>Create New Contact</button>
+      <button class="submit" onClick={openCreateModal}>Create New Contact</button>
       {isModalOpen && (
         <div className="modal">
           <div className="modal-content">
@@ -60,7 +60,7 @@ function App() {
           </div>
         </div>
       )}
-    </>
+    </body>
   );
 }
 
