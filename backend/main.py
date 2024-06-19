@@ -48,7 +48,7 @@ def update_contact(user_id):
 
 @app.route("/delete_contact/<int:user_id>",methods=["DELETE"])
 def delete_contact(user_id):
-    contact=Contact.query.filter_by(id=user_id)
+    contact=Contact.query.get(user_id)
 
     if not contact:
         return jsonify({"message":"Contact not found"}),404
@@ -57,6 +57,7 @@ def delete_contact(user_id):
     db.session.commit()
 
     return (jsonify({"message":"Contact deleted"}),200)
+
 
 #only if you run the file directly do this, if import don't execute
 if __name__=="__main__":
