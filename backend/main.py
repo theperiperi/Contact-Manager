@@ -27,21 +27,24 @@ def create_contact():
     
     return (jsonify({"message":"Contact created"}),201,)
 
-@app.route("/update_contact/<int:user_id>",methods=["PUT"])
+@app.route("/update_contact/<int:user_id>", methods=["PATCH"])
 def update_contact(user_id):
-    contact=Contact.query.get(id=user_id)
+    contact = Contact.query.get(user_id)
 
     if not contact:
-        return jsonify({"message":"Contact not found"}),404
-    
-    data=request.json
-    #if first name exists in the data, update the contact's first name, else keep what u have
-    contact.first_name=data.get("firstName",contact.first_name)
-    contact.last_name=data.get("lastName",contact.last_name)
-    contact.email=data.get("email",contact.email)
+        return jsonify({"message": "Contact not found"}), 404
 
-    db.session.commit()
-    return (jsonify({"message":"Contact updated"}),200)
+    data = request.json
+    contact.first_name = data.get("firstName", contact.first_name)
+    contact.last_name = data.get("lastName", contact.last_name)
+    contact.email = data.get("email", contact.email)
+
+    try:
+        db.session.commit()
+        return jsonify({"message": "Contact updated"}), 200
+    except Exception as e:
+        return jsonify({"message": str(e)}), 400
+
 
 @app.route("/delete_contact/<int:user_id>",methods=["DELETE"])
 def delete_contact(user_id):
